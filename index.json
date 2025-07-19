@@ -1,0 +1,78 @@
+[
+{
+	"uri": "http://localhost:1313/1-introduce/",
+	"title": "Giới thiệu",
+	"tags": [],
+	"description": "",
+	"content": "CI/CD Pipeline Migration là quá trình chuyển đổi hệ thống triển khai phần mềm từ mô hình cũ sang một pipeline hiện đại, hiệu quả hơn, đồng thời tích hợp nhiều công cụ để tự động hóa và tối ưu quy trình DevOps. Đề tài này sử dụng các dịch vụ của AWS như CodePipeline, CodeBuild, Elastic Beanstalk và CloudWatch nhằm xây dựng một quy trình triển khai tự động, linh hoạt và có khả năng giám sát chặt chẽ. Việc tích hợp CI/CD vào quy trình phát triển giúp tăng tốc độ release, giảm thiểu lỗi khi triển khai và đảm bảo chất lượng phần mềm ổn định qua từng thay đổi trong mã nguồn. Đặc biệt, việc sử dụng các dịch vụ tích hợp sẵn của AWS giúp bạn dễ dàng mở rộng quy mô, cấu hình bảo mật và ghi log đầy đủ phục vụ việc giám sát và truy vết khi cần thiết.\nVới việc thực hiện đề tài này, bạn sẽ đạt được những lợi ích sau:\nTự động hóa toàn bộ quá trình build, test, và deploy khi có thay đổi trên GitHub. Không cần máy chủ trung gian (Bastion) để deploy thủ công. Tận dụng các dịch vụ serverless và managed của AWS giúp giảm chi phí vận hành. Giám sát và log chi tiết toàn bộ quá trình build/deploy bằng CloudWatch. Dễ dàng tích hợp thêm các công cụ kiểm thử hoặc phân tích mã nguồn như JUnit, SonarQube, v.v. Không cần SSH hoặc truy cập thủ công vào server, giúp đảm bảo an toàn bảo mật hệ thống. Quản lý và phân quyền triển khai theo IAM Role, đáp ứng các chính sách bảo mật nội bộ. Giao diện trực quan, dễ cấu hình, dễ mở rộng cho các nhóm phát triển lớn hoặc nhiều môi trường (dev/staging/production). Với những ưu điểm trên, đề tài giúp thay thế các pipeline truyền thống, thủ công hoặc thiếu kiểm soát, bằng một giải pháp CI/CD hiện đại, tự động và đáng tin cậy trong môi trường AWS.\n"
+},
+{
+	"uri": "http://localhost:1313/",
+	"title": "Pipeline DevOps",
+	"tags": [],
+	"description": "",
+	"content": "Xây dựng và Tối ưu hóa Pipeline DevOps với AWS CodePipeline, CodeBuild, Elastic Beanstalk và CloudWatch Tổng quan Trong bài lab này, bạn sẽ tìm hiểu các khái niệm cơ bản và thực hành về CI/CD Pipeline Migration.\nNội dung Giới thiệu Các bước chuẩn bị Tạo Elastic Beanstalk Tạo CodeBuild Tạo CodePipeline Dọn dẹp tài nguyên "
+},
+{
+	"uri": "http://localhost:1313/2-prerequiste/2.1-createec2/",
+	"title": "Tạo github repository",
+	"tags": [],
+	"description": "",
+	"content": "Tạo Github repository Tải source code về dùng lệnh git git clone https://github.com/NguyenThanhTruong030603/DO-AN-WEB-TIN-TUC Tại trang Github. Tạo repository trên Github Sau đó push code lên "
+},
+{
+	"uri": "http://localhost:1313/2-prerequiste/",
+	"title": "Các bước chuẩn bị",
+	"tags": [],
+	"description": "",
+	"content": "Nội dung Tạo github repository Tạo IAM Role "
+},
+{
+	"uri": "http://localhost:1313/2-prerequiste/2.2-createiamrole/",
+	"title": "Tạo IAM Role",
+	"tags": [],
+	"description": "",
+	"content": "Tạo IAM Role Trong bước này chúng ta sẽ tiến hành tạo IAM Role.\nTruy cập vào giao diện quản trị dịch vụ IAM Ở thanh điều hướng bên trái, click Roles. Click Create role. Click AWS service và click Elastic Beanstalk ở Use case. Click Elastic Beanstalk - Compute. Click Next. Trong Add permissions. Kiểm tra phải có các policy: AWSElasticBeanstalkMulticontainerDocker, AWSElasticBeanstalkWebTier, AWSElasticBeanstalkWorkerTier. Click Next. Đặt role name là aws-elasticbeanstalk-ec2-role, sau đó chọn Create role. Click Create Role. 7. Tiếp tục ở role tạo tiếp 1 role mới.\nClick Create Role. Click AWS service và click Elastic Beanstalk ở Use case. Click Elastic Beanstalk - Environtment. Click Next. Trong Add permissions. Kiểm tra phải có các policy: AWSElasticBeanstalkEnhancedHealth, AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy. Click Next. Đặt role name là aws-elasticbeanstalk-service-role, sau đó chọn Create role. "
+},
+{
+	"uri": "http://localhost:1313/3-accessibilitytoinstances/",
+	"title": "TẠO ELASTIC BEANSTALK",
+	"tags": [],
+	"description": "",
+	"content": "Tạo ELASTIC BEANSTALK Truy cập AWS Management Console và mở dịch vụ ELASTIC BEANSTALK. Tại giao diện chính của ELASTIC BEANSTALK chọn Create application. Tại giao diện Configure environment. Click Web server environment. Đặt tên Application là nodejs-app. Đặt tên Environment là Nodejs-app-env. Trong Platform chọn Node.js. Application code click Sample application. Presets click Single instance Click Next. Tại giao diện Configure service accesss. Tại Service role chọn role đã tạo aws-elasticbeanstalk-service-role. Tại EC2 instance profile chon role đã tạo aws-elasticbeanstalk-ec2-role. Click Next. Tại giao diện Set up networking, database, and tags - optional. Kéo xuống chọn Skip to review. 6. Tại giao diện Review.\nClick Create. Sau khi tạo xong để xem trang thì chọn link dưới Domain. "
+},
+{
+	"uri": "http://localhost:1313/4-s3log/",
+	"title": "Tạo CodeBuild",
+	"tags": [],
+	"description": "",
+	"content": "Tạo CodeBuild Truy cập AWS Management Console và mở dịch vụ CodeBuild. Tại giao diện chính của CodeBuild chọn Create project. Tại giao diện Create build project. Đặt tên project là *build-nodeappjs. Project type chon Default project. Source chọn Github. Repository là link repository bạn đã tạo ở trên. Chọn Rebuild every time a code change is pushed to this repository. Ở Build type chọn Single build. Ở Environment chọn On-demand , Managed image, EC2, Container phần ở trong Environtment còn lại giữ nguyên. Chọn New service role và role name sẽ được tự động tạo. Trong Buildspec chọn Use a buildspec file. Click Create build project. Dưới đây là giao diện sau khi tạo xong "
+},
+{
+	"uri": "http://localhost:1313/5-portfwd/",
+	"title": "Tạo CodePipeline",
+	"tags": [],
+	"description": "",
+	"content": "Tạo CodePipeline Truy cập AWS Management Console và mở dịch vụ CodePipeline. Tại giao diện chính của CodePipeline chọn Create pipeline. Tại giao diện Choose creation option. Click Build custom pipeline. Click Next. Tại giao diện Choose pipeline settings. Đặt tên pipeline là pipeline-nodejsapp. Execution mode chọn Queued. Service role chọn New service role. Click Next. Tại giao diện Add source stage. Tại source provider chọn Github (via Github App). Sau đó kết nối với Github của bạn. Repositoy name điền tên repository bạn đã tạo. Chọn branch lưu code của bạn. Click Next. Tại giao diện Add Build stage. Chọn Other build providers. Chọn AWS CodeBuild. Chọn CodeBuild đã tạo khi nãy. Build type chọn Single build Click Next. Tại giao diện Add test stage. Click Next. Tại giao diện Add deploy stage. Chọn AWS Elastic Beanstalk. Chọn Application name đã tạo ở Elastic Beanstalk. Chọn Environment name đã tạo ở Elastic Beanstalk. Click Next. Tại Review kéo xuống chọn Create pipeline. Dưới đây là giao diện tạo thành công. 11. Vào lại link Domain ở Elastic Beanstalk để xem trang đã deploy lên Lưu ý: Nếu tạo thất bại thì hãy vào IAM chọn role và tìm role pipeline đang chạy hiện tại sau đó thêm role AdministratorAccess-AWSElasticBeanstalk rồi chọn Release change để chạy lại.\n"
+},
+{
+	"uri": "http://localhost:1313/6-cleanup/",
+	"title": "Dọn dẹp tài nguyên  ",
+	"tags": [],
+	"description": "",
+	"content": "Chúng ta sẽ tiến hành các bước sau để xóa các tài nguyên chúng ta đã tạo trong bài thực hành này.\nXóa CodePipeline Truy cập CodePipeline Chọn pipeline đã tạo. Chọn Delete pipeline Xóa CodeBuild Truy cập CodeBuild Chọn CodeBuild đã tạo. Chọn Action, chọn Delete. Xóa Elastic Beanstalk Truy cập Elastic Beanstalk Chọn Application đã tạo. Chọn Action, chọn Delete application. 2. Ở Environments\nChọn Environment đã tạo. Chọn Action nếu nó bị mờ thì đã thành công. Xóa CloudWatch Truy cập vào CloudWatch Chọn Log groups Ở Log groups. chọn cái đã tạo. Chọn Action, chọn Delete log group(s). "
+},
+{
+	"uri": "http://localhost:1313/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "http://localhost:1313/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
